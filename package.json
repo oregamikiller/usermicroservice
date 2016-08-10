@@ -1,0 +1,27 @@
+{
+  "name": "usermicroservice",
+  "version": "1.0.0",
+  "description": "my userservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oregamikiller/usermicroservice.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oregamikiller/usermicroservice/issues"
+  },
+  "homepage": "https://github.com/oregamikiller/usermicroservice#readme",
+  "dependencies": {
+    "connect-redis": "^3.1.0",
+    "express": "^4.14.0",
+    "express-session": "^1.14.0",
+    "ioredis": "^2.2.0",
+    "lodash": "^4.14.2",
+    "mongodb": "^2.2.5"
+  }
+}
