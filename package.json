@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/oregamikiller/usermicroservice#readme",
   "dependencies": {
+    "bcryptjs": "^2.3.0",
     "bluebird": "^3.4.1",
     "connect-redis": "^3.1.0",
     "express": "^4.14.0",
