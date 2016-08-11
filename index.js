@@ -5,13 +5,27 @@ var express = require('express'),
     log = console.log,
     redis = new require('ioredis')(config.redisUrl),
     MongoClient = require('mongodb').MongoClient,
-    db          = null,
+    mongoose = require('mongoose'),
+    Promise = require('bluebird'),
+    Schema = mongoose.Schema,
     app = express();
-
 
 MongoClient.connect("mongodb://localhost:27017/usermicroservice", function (err, mdb) {
     db = mdb;
 });
+
+
+var userSchema = new Schema({
+    id:  String,
+    password: String,
+    type:   String,
+    create_date: { type: Date, default: Date.now },
+});
+
+var User = mongoose.model('User', userSchema);
+
+mongoose.connect("mongodb://localhost:27017/usermicroservice");
+mongoose.Promise = Promise;
 app.set('trust proxy', 1);
 app.use(session({
     name: 'session',
@@ -31,9 +45,18 @@ app.get('/', function (req, res) {
 });
 
 app.get('/setup/', function (req, res) {
-    console.log(req.query.userID);
-    db.collection("users").insert({id: req.query.userID})
-    res.send(req.query.userID);
+    console.log(req.query.userID, req.query.password);
+    var user = new User({ id: req.query.userID, password: req.query.password});
+    User.findOne({id: req.query.userID}).exec().then(function (data) {
+        if (data) {
+            res.send('already exist');
+        } else {
+            user.save().then(function (data) {
+                res.send(data);
+            });
+        }
+    });
+
 });
 
 app.listen(80);
