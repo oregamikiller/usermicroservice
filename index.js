@@ -8,6 +8,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     Promise = require('bluebird'),
     Schema = mongoose.Schema,
+    bodyParser = require('body-parser'),
     app = express();
 
 MongoClient.connect("mongodb://localhost:27017/usermicroservice", function (err, mdb) {
@@ -27,6 +28,9 @@ var User = mongoose.model('User', userSchema);
 mongoose.connect("mongodb://localhost:27017/usermicroservice");
 mongoose.Promise = Promise;
 app.set('trust proxy', 1);
+
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(session({
     name: 'session',
     store: new SessionStore({
