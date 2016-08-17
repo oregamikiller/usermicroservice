@@ -102,7 +102,9 @@ app.get('/login/', function(req, res) {
                         .then(function () {
                             res.send(token);
                         })
-                    }
+                    } else {
+                    res.send('wrong userID or password');
+                }
             });
         } else {
             res.send('no user');
