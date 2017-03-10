@@ -49,7 +49,7 @@ var userSchema = new Schema({
 
 var User = mongoose.model('User', userSchema);
 
-mongoose.connect("mongodb://localhost:27017/usermicroservice");
+mongoose.connect("mongodb://127.0.0.1:27017/usermicroservice");
 mongoose.Promise = Promise;
 app.set('trust proxy', 1);
 
