@@ -142,6 +142,11 @@ app.get('/user/', function(req, res) {
    }
 });
 
-app.listen(80);
+app.listen(config.port);
+
+console.log("Server is listening: " + config.port);
 
 
+process.on("uncaughtException", function (err) {
+    console.log(err);
+});

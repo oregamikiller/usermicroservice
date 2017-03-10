@@ -1,0 +1,3 @@
+BUILD_TARGET_NAME=usermicroservice
+
+docker build -t $BUILD_TARGET_NAME .
