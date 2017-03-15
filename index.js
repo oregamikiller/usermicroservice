@@ -100,7 +100,7 @@ app.get('/login/', function(req, res) {
                     var token = uid(256);
                     redis.set('token:'+ token, req.session.user.id, 'EX',30 * 24 * 3600)
                         .then(function () {
-                            res.json(token);
+                            res.json({msg: 'ok', token: token});
                         })
                     } else {
                     res.json({msg: 'wrong userID or password'});
@@ -131,14 +131,14 @@ app.get('/user/', function(req, res) {
               User.findOne({id: userID}).exec().then(function (data) {
                   data = data.toObject();
                   delete data.password;
-                  res.send(data);
+                  res.json({msg: 'ok', user: data});
               });
           } else {
-              res.send('need login');
+              res.json({msg: 'need login'});
           }
        });
    } else {
-       res.send('need login');
+       res.json({msg: 'need login'});
    }
 });
 
