@@ -75,7 +75,7 @@ app.get('/setup/', function (req, res) {
     var user = new User({ id: req.query.userID, password: req.query.password});
     User.findOne({id: req.query.userID}).exec().then(function (data) {
         if (data) {
-            res.send('already exist');
+            res.redirect('/login/');
         } else {
             generatePasswordHash(user.password).then(function(hash) {
                 user.password = hash;
