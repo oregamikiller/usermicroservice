@@ -75,12 +75,12 @@ app.get('/setup/', function (req, res) {
     var user = new User({ id: req.query.userID, password: req.query.password});
     User.findOne({id: req.query.userID}).exec().then(function (data) {
         if (data) {
-            res.redirect('/login/');
+            res.redirect('/login/?userID=' + req.query.userID + '&password=' + req.query.password);
         } else {
             generatePasswordHash(user.password).then(function(hash) {
                 user.password = hash;
                 user.save().then(function (data) {
-                    res.send(data);
+                    res.redirect('/login/?userID=' + req.query.userID + '&password=' + req.query.password);
             });
             });
         }
@@ -100,14 +100,14 @@ app.get('/login/', function(req, res) {
                     var token = uid(256);
                     redis.set('token:'+ token, req.session.user.id, 'EX',30 * 24 * 3600)
                         .then(function () {
-                            res.send(token);
+                            res.json(token);
                         })
                     } else {
-                    res.send('wrong userID or password');
+                    res.json({msg: 'wrong userID or password'});
                 }
             });
         } else {
-            res.send('no user');
+            res.json({msg: 'no user'});
         }
     });
 });
